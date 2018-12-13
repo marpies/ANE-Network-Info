@@ -75,9 +75,6 @@
 - (int)getConnectivityStatus {
     
     NetworkStatus netStatus = [_reachability currentReachabilityStatus];
-    BOOL connectionRequired = [_reachability connectionRequired];
-    
-    NSLog(@"network status %li, connection required: %i", (long) netStatus, connectionRequired);
     
     return netStatus;
 }
