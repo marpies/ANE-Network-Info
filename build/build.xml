@@ -20,19 +20,13 @@
         <!-- make the build directory for the objc code -->
         <mkdir dir="temp/ios"/>
 
-        <!-- clean the build -->
-        <exec executable="xcodebuild" failonerror="true" dir="../ios">
-            <arg line="-workspace ${name}.xcworkspace"/>
-            <arg line="-scheme ${name}"/>
-            <arg line="clean"/>
-        </exec>
-
         <!-- compile the ios lib -->
         <exec executable="xcodebuild" failonerror="true" dir="../ios">
             <arg line="-workspace ${name}.xcworkspace"/>
             <arg line="-scheme ${name}"/>
             <arg line="-sdk iphoneos"/>
             <arg line="-configuration Release"/>
+            <arg line="-quiet"/>
             <arg line="SYMROOT=$(PWD)/../ios/build"/>
         </exec>
 
@@ -160,7 +154,6 @@
         <unzip src="temp/swc/${name}.swc" dest="temp/swc/content" overwrite="true"/>
 
         <copy file="temp/swc/content/library.swf" todir="temp/ios" overwrite="true"/>
-        <copy file="temp/swc/content/library.swf" todir="temp/ios-simulator" overwrite="true"/>
         <copy file="temp/swc/content/library.swf" todir="temp/android" overwrite="true"/>
         <copy file="temp/swc/content/library.swf" todir="temp/default" overwrite="true"/>
     </target>
@@ -179,7 +172,8 @@
             <arg line="-platform default -C default/ ."/>
         </exec>
 
-        <move file="temp/${name}.ane" todir="../bin"/>
+        <move file="temp/${name}.ane" tofile="../bin/${packageName}.ane" overwrite="true" />
+        <move file="temp/swc/${name}.swc" tofile="../bin/${packageName}.swc" overwrite="true" />
         <delete dir="temp"/>
     </target>
 
